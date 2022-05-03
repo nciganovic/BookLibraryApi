@@ -2,7 +2,7 @@
 
 namespace Domain
 {
-    public class Membership : BaseEntity, IEntity
+    public class Membership : BaseEntity
     {
         public string Name { get; set; }
         public decimal MonthlyFee { get; set; }
