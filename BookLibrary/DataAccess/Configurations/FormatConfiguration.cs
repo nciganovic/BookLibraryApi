@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DataAccess.Configurations
 {
-    public class CategoryConfiguration : BaseEntityConfiguration<Category>
+    public class FormatConfiguration : BaseEntityConfiguration<Format>
     {
-        public override void Configure(EntityTypeBuilder<Category> builder)
+        public override void Configure(EntityTypeBuilder<Format> builder)
         {
             base.Configure(builder);
 

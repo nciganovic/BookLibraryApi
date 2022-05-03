@@ -1,6 +1,6 @@
-﻿using Domain;
+﻿using DataAccess.Configurations;
+using Domain;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace DataAccess
 {
@@ -14,7 +14,7 @@ namespace DataAccess
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<RoleUserCase> RoleCases { get; set; }
+        public DbSet<RoleUserCase> RoleUserCases { get; set; }
         public DbSet<UseCaseLog> UseCaseLogs { get; set; }
         public DbSet<Membership> Memberships { get; set; }
 
@@ -25,7 +25,15 @@ namespace DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.App
+            modelBuilder.ApplyConfiguration(new BookConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new AuthorConfiguration());
+            modelBuilder.ApplyConfiguration(new PublisherConfiguration());
+            modelBuilder.ApplyConfiguration(new FormatConfiguration());
+            modelBuilder.ApplyConfiguration(new ReservationConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleUserCaseConfiguration());
         }
     }
 }

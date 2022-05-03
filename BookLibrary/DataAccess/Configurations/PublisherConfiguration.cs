@@ -1,11 +1,17 @@
-﻿using Domain;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Domain;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DataAccess.Configurations
 {
-    public class CategoryConfiguration : BaseEntityConfiguration<Category>
+    public class PublisherConfiguration : BaseEntityConfiguration<Publisher>
     {
-        public override void Configure(EntityTypeBuilder<Category> builder)
+        public override void Configure(EntityTypeBuilder<Publisher> builder)
         {
             base.Configure(builder);
 

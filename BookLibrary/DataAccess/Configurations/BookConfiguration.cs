@@ -1,18 +1,15 @@
 ﻿using Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.Configurations
 {
-    public class BookConfiguration : IEntityTypeConfiguration<Book>
+    public class BookConfiguration : BaseEntityConfiguration<Book>
     {
-        public void Configure(EntityTypeBuilder<Book> builder)
+        public override void Configure(EntityTypeBuilder<Book> builder)
         {
+            base.Configure(builder);
+
             builder.Property(x => x.Title)
                 .HasMaxLength(80)
                 .IsRequired(true);
@@ -55,8 +52,6 @@ namespace DataAccess.Configurations
             builder.HasOne(x => x.Format)
               .WithMany(f => f.Books)
               .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Property(au => au.CreatedAt).HasDefaultValueSql("GETDATE()");
         }
     }
 }

@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Configurations
 {
-    public class UserConfiguration : IEntityTypeConfiguration<User>
+    public class UserConfiguration : BaseEntityConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public override void Configure(EntityTypeBuilder<User> builder)
         {
+            base.Configure(builder);
+
             builder.Property(au => au.FirstName)
                 .HasMaxLength(30)
                 .IsRequired();
@@ -32,8 +34,6 @@ namespace DataAccess.Configurations
 
             builder.HasIndex(au => au.Email)
                 .IsUnique();
-
-            builder.Property(au => au.CreatedAt).HasDefaultValueSql("GETDATE()");
 
             builder.HasOne(x => x.Role)
                 .WithMany(r => r.Users)
