@@ -3,7 +3,7 @@ using Domain;
 
 namespace Application.Commands.MembershipCommands
 {
-    public interface IAddMembership : ICommand<Membership>
+    public interface IAddMembershipCommand : ICommand<Membership>
     {
     }
 }
