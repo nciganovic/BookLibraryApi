@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31829.152
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{7DC9C5C6-D583-48F1-8E71-7A6C1E00BC0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{7DC9C5C6-D583-48F1-8E71-7A6C1E00BC0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{3520A5FB-A1E7-46C0-908A-8DD03F124EB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{3520A5FB-A1E7-46C0-908A-8DD03F124EB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Implementation", "Implementation\Implementation.csproj", "{2F4CD970-86E2-4526-AD0C-FFAFA89B973E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Implementation", "Implementation\Implementation.csproj", "{2F4CD970-86E2-4526-AD0C-FFAFA89B973E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Applicaiton", "Applicaiton\Applicaiton.csproj", "{6F4D6DDA-9C4D-4FDA-BB52-BFB4E8DA3179}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Applicaiton\Application.csproj", "{6F4D6DDA-9C4D-4FDA-BB52-BFB4E8DA3179}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{5ACD5089-EDC9-421B-9E26-3FF1999C25D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{5ACD5089-EDC9-421B-9E26-3FF1999C25D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
