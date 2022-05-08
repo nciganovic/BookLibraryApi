@@ -34,6 +34,7 @@ namespace DataAccess
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
             modelBuilder.ApplyConfiguration(new RoleUserCaseConfiguration());
+            modelBuilder.ApplyConfiguration(new MembershipConfiguration());
         }
     }
 }
