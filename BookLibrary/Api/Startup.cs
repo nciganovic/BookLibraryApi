@@ -1,14 +1,20 @@
+using Api.Core;
+using Application;
 using Application.Commands.MembershipCommands;
+using Application.Interfaces;
 using Application.MapperProfiles;
 using DataAccess;
 using Implementation.EfCommands.MembershipCommands;
+using Implementation.Logging;
 using Implementation.Validator;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 
 namespace Api
 {
@@ -31,9 +37,32 @@ namespace Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
             });
 
+            /*
+            services.AddTransient<IApplicationActor>(x =>
+            {
+                var accessor = x.GetService<IHttpContextAccessor>();
+                var user = accessor.HttpContext.User;
+
+                if (user.FindFirst("ActorData") == null)
+                {
+                    return new AnonymousActor();
+                }
+
+                var actorString = user.FindFirst("ActorData").Value;
+
+                var actor = JsonConvert.DeserializeObject<JwtActor>(actorString);
+
+                return actor;
+            });*/
+
+            services.AddTransient<IApplicationActor, FakeAdminActor>();
+
+            services.AddTransient<UseCaseExecutor>();
+            services.AddTransient<IUseCaseLogger, DatabaseUseCaseLogger>();
+
             services.AddDbContext<BookLibraryContext>();
             services.AddTransient<IAddMembershipCommand, EfAddMembershipCommand>();
-
+            
             services.AddTransient<AddMembershipValidator>();
 
             services.AddAutoMapper(typeof(DefaultProfile));

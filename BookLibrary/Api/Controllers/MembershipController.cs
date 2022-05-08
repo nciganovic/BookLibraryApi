@@ -27,7 +27,14 @@ namespace Api.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok();
+        }
+
         // POST api/<MembershipController>
+        [HttpPost]
         public IActionResult Post([FromBody] AddMembershipDto dto
             , [FromServices] IAddMembershipCommand command
             , [FromServices] AddMembershipValidator validator)
@@ -42,6 +49,18 @@ namespace Api.Controllers
             }
 
             return UnprocessableEntity(UnprocessableEntityResponse.Message(result.Errors));
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id)
+        {
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            return Ok();
         }
     }
 }
