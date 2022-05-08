@@ -6,6 +6,6 @@ namespace Application.Interfaces
     {
         int Id { get; }
         string Identity { get; }
-        IEnumerable<int> AllowedUseCases { get; } 
+        IEnumerable<int> AllowedUseCases { get; }
     }
 }
