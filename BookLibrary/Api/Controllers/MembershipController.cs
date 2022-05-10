@@ -52,7 +52,9 @@ namespace Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id)
+        public IActionResult Put(int id, [FromBody] ChangeMembershipDto dto
+            , [FromServices] IChangeMembershipCommand command
+            , [FromServices] AddMembershipValidator validator)
         {
             return Ok();
         }

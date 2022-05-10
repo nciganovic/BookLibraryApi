@@ -21,12 +21,21 @@ namespace Implementation.Validator
                 .NotEmpty()
                 .MaximumLength(30);
 
+            RuleFor(x => x.Name)
+                .Must(x => IsNameUnique(x))
+                .WithMessage("Name must have unique value");
+
             RuleFor(x => x.Description)
                 .NotEmpty()
                 .MaximumLength(30);
             
             RuleFor(x => x.MonthlyFee)
                 .GreaterThan(0);
+        }
+
+        public bool IsNameUnique(string value)
+        {
+            return _context.Memberships.Where(x => x.Name == value).FirstOrDefault() == null;
         }
     }
 }
