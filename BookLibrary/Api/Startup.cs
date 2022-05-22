@@ -62,8 +62,11 @@ namespace Api
 
             services.AddDbContext<BookLibraryContext>();
             services.AddTransient<IAddMembershipCommand, EfAddMembershipCommand>();
-            
+            services.AddTransient<IChangeMembershipCommand, EfChangeMembershipCommand>();
+            services.AddTransient<IRemoveMembershipCommand, EfRemoveMembershipCommand>();
+
             services.AddTransient<AddMembershipValidator>();
+            services.AddTransient<ChangeMembershipValidator>();
 
             services.AddAutoMapper(typeof(DefaultProfile));
         }

@@ -1,4 +1,4 @@
-﻿using Applicaiton.Commands.MembershipCommands;
+﻿using Application.Commands.MembershipCommands;
 using Application.Exceptions;
 using DataAccess;
 using Domain;
@@ -16,12 +16,12 @@ namespace Implementation.EfCommands.MembershipCommands
 
         public string Name => "Remove Membership";
 
-        public void Execute(Membership request)
+        public void Execute(int request)
         {
-            Membership item = context.Memberships.Find(request.Id);
+            Membership item = context.Memberships.Find(request);
 
             if (item == null)
-                throw new EntityNotFoundException(request.Id, "Membership");
+                throw new EntityNotFoundException(request, "Membership");
 
             item.DeletedAt = DateTime.Now;
 

@@ -5,9 +5,9 @@ using System;
 
 namespace Implementation.EfCommands.MembershipCommands
 {
-    public class EfChangeMemebershipCommand : BaseCommand, IAddMembershipCommand
+    public class EfChangeMembershipCommand : BaseCommand, IChangeMembershipCommand
     {
-        public EfChangeMemebershipCommand(BookLibraryContext context): base(context)
+        public EfChangeMembershipCommand(BookLibraryContext context): base(context)
         {
 
         }

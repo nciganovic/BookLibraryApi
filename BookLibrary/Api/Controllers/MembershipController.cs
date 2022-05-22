@@ -1,5 +1,5 @@
-﻿using Application;
-using Application.Commands.MembershipCommands;
+﻿using Application.Commands.MembershipCommands;
+using Application;
 using Application.Dto;
 using AutoMapper;
 using Domain;
@@ -28,7 +28,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(int id)
         {
             return Ok();
         }
@@ -45,7 +45,7 @@ namespace Api.Controllers
             {
                 Membership membership = _mapper.Map<Membership>(dto);
                 _useCaseExecutor.ExecuteCommand(command, membership);
-                return Ok("Membership added sucessfully");
+                return Ok("Membership added successfully");
             }
 
             return UnprocessableEntity(UnprocessableEntityResponse.Message(result.Errors));
@@ -54,15 +54,26 @@ namespace Api.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] ChangeMembershipDto dto
             , [FromServices] IChangeMembershipCommand command
-            , [FromServices] AddMembershipValidator validator)
+            , [FromServices] ChangeMembershipValidator validator)
         {
-            return Ok();
+            dto.Id = id;
+            var result = validator.Validate(dto);
+
+            if (result.IsValid)
+            {
+                Membership membership = _mapper.Map<Membership>(dto);
+                _useCaseExecutor.ExecuteCommand(command, membership);
+                return Ok("Membership changed successfully");
+            }
+
+            return UnprocessableEntity(UnprocessableEntityResponse.Message(result.Errors));
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id, [FromServices] IRemoveMembershipCommand command)
         {
-            return Ok();
+            _useCaseExecutor.ExecuteCommand(command, id);
+            return Ok("Membership removed successfully.");
         }
     }
 }
