@@ -3,9 +3,11 @@ using Application;
 using Application.Commands.MembershipCommands;
 using Application.Interfaces;
 using Application.MapperProfiles;
+using Application.Queries.Memberships;
 using DataAccess;
 using Implementation.EfCommands.MembershipCommands;
 using Implementation.Logging;
+using Implementation.Queries.MembershipQueries;
 using Implementation.Validator;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -64,6 +66,7 @@ namespace Api
             services.AddTransient<IAddMembershipCommand, EfAddMembershipCommand>();
             services.AddTransient<IChangeMembershipCommand, EfChangeMembershipCommand>();
             services.AddTransient<IRemoveMembershipCommand, EfRemoveMembershipCommand>();
+            services.AddTransient<IGetOneMembershipQuery, EfGetOneMembershipQuery>();
 
             services.AddTransient<AddMembershipValidator>();
             services.AddTransient<ChangeMembershipValidator>();

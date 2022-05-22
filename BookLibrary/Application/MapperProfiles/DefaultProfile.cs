@@ -14,6 +14,8 @@ namespace Application.MapperProfiles
         public DefaultProfile()
         {
             CreateMap<AddMembershipDto, Membership>();
+            CreateMap<ChangeMembershipDto, Membership>();
+            CreateMap<Membership, MembershipResultDto>();
         }
     }
 }

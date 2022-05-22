@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Queries.Memberships;
 
 namespace Api.Controllers
 {
@@ -27,10 +28,11 @@ namespace Api.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public IActionResult Get(int id)
+        [HttpGet("{id}")]
+        public IActionResult Get(int id, [FromServices] IGetOneMembershipQuery query)
         {
-            return Ok();
+            MembershipResultDto result = _useCaseExecutor.ExecuteQuery(query, id);
+            return Ok(result);
         }
 
         // POST api/<MembershipController>
