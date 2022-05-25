@@ -67,6 +67,7 @@ namespace Api
             services.AddTransient<IChangeMembershipCommand, EfChangeMembershipCommand>();
             services.AddTransient<IRemoveMembershipCommand, EfRemoveMembershipCommand>();
             services.AddTransient<IGetOneMembershipQuery, EfGetOneMembershipQuery>();
+            services.AddTransient<IGetMembershipsQuery, EfGetMembershipsQuery>();
 
             services.AddTransient<AddMembershipValidator>();
             services.AddTransient<ChangeMembershipValidator>();

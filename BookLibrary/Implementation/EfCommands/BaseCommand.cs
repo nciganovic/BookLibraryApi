@@ -1,4 +1,6 @@
-﻿using DataAccess;
+﻿using Application.Searches;
+using DataAccess;
+using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;

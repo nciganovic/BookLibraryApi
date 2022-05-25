@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Implementation.Queries.MembershipQueries
 {
-    public class EfGetOneMembershipQuery : BaseCommand, IGetOneMembershipQuery
+    public class EfGetOneMembershipQuery : BaseQuery<Membership>, IGetOneMembershipQuery
     {
         private IMapper _mapper;
 

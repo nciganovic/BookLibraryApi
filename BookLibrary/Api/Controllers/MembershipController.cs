@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Queries.Memberships;
+using Application.Searches;
 
 namespace Api.Controllers
 {
@@ -32,6 +33,14 @@ namespace Api.Controllers
         public IActionResult Get(int id, [FromServices] IGetOneMembershipQuery query)
         {
             MembershipResultDto result = _useCaseExecutor.ExecuteQuery(query, id);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public IActionResult Get([FromBody] MembershipSearch search,
+              [FromServices] IGetMembershipsQuery query)
+        {
+            IEnumerable<MembershipResultDto> result = _useCaseExecutor.ExecuteQuery(query, search);
             return Ok(result);
         }
 
