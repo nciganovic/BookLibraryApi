@@ -1,6 +1,6 @@
 ﻿using Application.Commands.MembershipCommands;
 using Application;
-using Application.Dto;
+using Application.Dto.Membership;
 using AutoMapper;
 using Domain;
 using Implementation.ResponseMessages;
