@@ -33,6 +33,12 @@ namespace Implementation.Queries.MembershipQueries
 
             BasicFilter(ref query, search);
 
+            if (search.Name != null)
+                query = query.Where(x => x.Name.ToLower().Contains(search.Name.ToLower()));
+
+            if (search.Description != null)
+                query = query.Where(x => x.Description.ToLower().Contains(search.Description.ToLower()));
+
             return query.OrderBy(x => x.CreatedAt).Select(x => _mapper.Map<Membership, MembershipResultDto>(x)).ToList();
         }
     }
