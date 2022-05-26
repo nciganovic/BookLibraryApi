@@ -1,6 +1,6 @@
 ﻿namespace Application.Dto.Language
 {
-    public class AddPublisherDto
+    public class AddLanguageDto
     {
         public string Name { get; set; }
     }

@@ -1,6 +1,6 @@
 ﻿namespace Application.Dto.Category
 {
-    public class ChangeAuthorDto : AddAuthorDto
+    public class ChangeCategoryDto : AddCategoryDto
     {
         public int Id { get; set; }
     }

@@ -1,6 +1,6 @@
-﻿namespace Application.Dto.Category
+﻿namespace Application.Dto.Format
 {
-    public class CategoryResultDto
+    public class FormatResultDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
