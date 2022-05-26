@@ -1,4 +1,4 @@
-﻿using Application.Dto;
+﻿using Application.Dto.Membership;
 using DataAccess;
 using FluentValidation;
 using System.Linq;

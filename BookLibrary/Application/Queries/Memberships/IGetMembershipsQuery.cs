@@ -1,4 +1,4 @@
-﻿using Application.Dto;
+﻿using Application.Dto.Membership;
 using Application.Interfaces;
 using Application.Searches;
 using System.Collections.Generic;

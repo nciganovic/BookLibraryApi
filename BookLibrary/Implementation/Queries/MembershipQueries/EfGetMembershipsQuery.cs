@@ -1,16 +1,11 @@
-﻿using Application.Dto;
-using Application.Filter;
+﻿using Application.Dto.Membership;
 using Application.Queries.Memberships;
 using Application.Searches;
 using AutoMapper;
 using DataAccess;
 using Domain;
-using Implementation.EfCommands;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Implementation.Queries.MembershipQueries
 {
@@ -23,7 +18,7 @@ namespace Implementation.Queries.MembershipQueries
             _mapper = mapper;
         }
 
-        public int Id => 5;
+        public int Id => 15;
 
         public string Name => "Get memberships";
 

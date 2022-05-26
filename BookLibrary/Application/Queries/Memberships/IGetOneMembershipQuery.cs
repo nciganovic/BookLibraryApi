@@ -1,4 +1,4 @@
-﻿using Application.Dto;
+﻿using Application.Dto.Membership;
 using Application.Interfaces;
 
 namespace Application.Queries.Memberships
