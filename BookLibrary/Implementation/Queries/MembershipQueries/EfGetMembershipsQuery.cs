@@ -39,7 +39,13 @@ namespace Implementation.Queries.MembershipQueries
             if (search.Description != null)
                 query = query.Where(x => x.Description.ToLower().Contains(search.Description.ToLower()));
 
-            return query.OrderBy(x => x.CreatedAt).Select(x => _mapper.Map<Membership, MembershipResultDto>(x)).ToList();
+            if (search.MonthlyFeeFrom != null)
+                query = query.Where(x => search.MonthlyFeeFrom <= x.MonthlyFee);
+
+            if (search.MonthlyFeeTo != null)
+                query = query.Where(x => search.MonthlyFeeTo >= x.MonthlyFee);
+
+            return query.OrderBy(x => x.MonthlyFee).Select(x => _mapper.Map<Membership, MembershipResultDto>(x)).ToList();
         }
     }
 }
