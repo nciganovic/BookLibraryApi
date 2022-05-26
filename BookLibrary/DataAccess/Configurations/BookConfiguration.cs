@@ -37,7 +37,7 @@ namespace DataAccess.Configurations
                 .WithMany(p => p.Books)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(x => x.Languague)
+            builder.HasOne(x => x.Language)
                 .WithMany(l => l.Books)
                 .OnDelete(DeleteBehavior.Restrict);
 

@@ -15,8 +15,8 @@ namespace Domain
         public int Year { get; set; }
         public int PublisherId { get; set; }
         public virtual Publisher Publisher { get; set; }
-        public int LanguagueId { get; set; }
-        public virtual Languague Languague { get; set; }
+        public int LanguageId { get; set; }
+        public virtual Language Language { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
         public int FormatId { get; set; }
