@@ -17,6 +17,7 @@ namespace DataAccess
         public DbSet<RoleUserCase> RoleUserCases { get; set; }
         public DbSet<UseCaseLog> UseCaseLogs { get; set; }
         public DbSet<Membership> Memberships { get; set; }
+        public DbSet<Language> Languages { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
