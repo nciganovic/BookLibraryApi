@@ -19,11 +19,11 @@ namespace Application.MapperProfiles
             CreateMap<Membership, MembershipResultDto>();
 
             CreateMap<AddRoleDto, Role>();
-            CreateMap<ChangeRoleDto, Membership>();
+            CreateMap<ChangeRoleDto, Role>();
             CreateMap<Role, RoleResultDto>();
 
             CreateMap<AddLanguageDto, Language>();
-            CreateMap<ChangeLanguageDto, Membership>();
+            CreateMap<ChangeLanguageDto, Language>();
             CreateMap<Language, LanguageResultDto>();
 
             CreateMap<AddPublisherDto, Publisher>();
