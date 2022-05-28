@@ -5,7 +5,7 @@ using System;
 
 namespace Implementation.EfCommands.PublisherCommands
 {
-    public class EfChangePublisherCommand : BaseCommand, IChangePublisherCommnad
+    public class EfChangePublisherCommand : BaseCommand, IChangePublisherCommand
     {
         public EfChangePublisherCommand(BookLibraryContext context) : base(context)
         {
@@ -18,7 +18,15 @@ namespace Implementation.EfCommands.PublisherCommands
 
         public void Execute(Publisher request)
         {
-            throw new NotImplementedException();
+            Publisher item = context.Publishers.Find(request.Id);
+
+            context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+
+            request.UpdatedAt = DateTime.Now;
+
+            var entity = context.Publishers.Attach(request);
+            entity.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            context.SaveChanges();
         }
     }
 }

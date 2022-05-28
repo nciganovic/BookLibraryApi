@@ -1,5 +1,7 @@
 ﻿using Application.Commands.Formats;
+using Application.Exceptions;
 using DataAccess;
+using Domain;
 using System;
 
 namespace Implementation.EfCommands.FormatCommands
@@ -17,7 +19,15 @@ namespace Implementation.EfCommands.FormatCommands
 
         public void Execute(int request)
         {
-            throw new NotImplementedException();
+            Format item = context.Formats.Find(request);
+
+            if (item == null)
+                throw new EntityNotFoundException(request, "Format");
+
+            item.DeletedAt = DateTime.Now;
+
+            context.Formats.Update(item);
+            context.SaveChanges();
         }
     }
 }

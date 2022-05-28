@@ -22,7 +22,8 @@ namespace Implementation.EfCommands.PublisherCommands
 
         public void Execute(Publisher request)
         {
-            throw new NotImplementedException();
+            context.Add(request);
+            context.SaveChanges();
         }
     }
 }

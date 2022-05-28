@@ -18,7 +18,8 @@ namespace Implementation.EfCommands.LanguageCommands
 
         public void Execute(Language request)
         {
-            throw new NotImplementedException();
+            context.Add(request);
+            context.SaveChanges();
         }
     }
 }

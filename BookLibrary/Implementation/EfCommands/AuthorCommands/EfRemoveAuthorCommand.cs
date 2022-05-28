@@ -1,5 +1,7 @@
 ﻿using Application.Commands.Authors;
+using Application.Exceptions;
 using DataAccess;
+using Domain;
 using System;
 
 namespace Implementation.EfCommands.FormatCommands
@@ -17,7 +19,15 @@ namespace Implementation.EfCommands.FormatCommands
 
         public void Execute(int request)
         {
-            throw new NotImplementedException();
+            Author item = context.Authors.Find(request);
+
+            if (item == null)
+                throw new EntityNotFoundException(request, "Author");
+
+            item.DeletedAt = DateTime.Now;
+
+            context.Authors.Update(item);
+            context.SaveChanges();
         }
     }
 }

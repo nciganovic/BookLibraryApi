@@ -18,7 +18,8 @@ namespace Implementation.EfCommands.FormatCommands
 
         public void Execute(Author request)
         {
-            throw new NotImplementedException();
+            context.Add(request);
+            context.SaveChanges();
         }
     }
 }

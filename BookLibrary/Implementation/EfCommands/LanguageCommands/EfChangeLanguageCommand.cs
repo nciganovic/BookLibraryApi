@@ -18,7 +18,15 @@ namespace Implementation.EfCommands.LanguageCommands
 
         public void Execute(Language request)
         {
-            throw new NotImplementedException();
+            Language item = context.Languages.Find(request.Id);
+
+            context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+
+            request.UpdatedAt = DateTime.Now;
+
+            var entity = context.Languages.Attach(request);
+            entity.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            context.SaveChanges();
         }
     }
 }

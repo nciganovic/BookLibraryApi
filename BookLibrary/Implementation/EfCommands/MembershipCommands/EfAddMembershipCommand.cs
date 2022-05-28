@@ -1,5 +1,4 @@
-﻿using System;
-using Application.Commands.MembershipCommands;
+﻿using Application.Commands.MembershipCommands;
 using Domain;
 using DataAccess;
 

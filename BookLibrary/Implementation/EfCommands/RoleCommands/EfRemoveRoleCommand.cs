@@ -1,5 +1,7 @@
 ﻿using Application.Commands.Roles;
+using Application.Exceptions;
 using DataAccess;
+using Domain;
 using System;
 
 namespace Implementation.EfCommands.RoleCommands
@@ -17,7 +19,15 @@ namespace Implementation.EfCommands.RoleCommands
 
         public void Execute(int request)
         {
-            throw new NotImplementedException();
+            Role item = context.Roles.Find(request);
+
+            if (item == null)
+                throw new EntityNotFoundException(request, "Role");
+
+            item.DeletedAt = DateTime.Now;
+
+            context.Roles.Update(item);
+            context.SaveChanges();
         }
     }
 }

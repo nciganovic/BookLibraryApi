@@ -22,7 +22,8 @@ namespace Implementation.EfCommands.RoleCommands
 
         public void Execute(Role request)
         {
-            throw new NotImplementedException();
+            context.Add(request);
+            context.SaveChanges();
         }
     }
 }

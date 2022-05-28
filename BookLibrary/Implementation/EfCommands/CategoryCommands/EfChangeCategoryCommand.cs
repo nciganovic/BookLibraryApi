@@ -18,7 +18,15 @@ namespace Implementation.EfCommands.FormatCommands
 
         public void Execute(Category request)
         {
-            throw new NotImplementedException();
+            Category item = context.Categories.Find(request.Id);
+
+            context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+
+            request.UpdatedAt = DateTime.Now;
+
+            var entity = context.Categories.Attach(request);
+            entity.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            context.SaveChanges();
         }
     }
 }

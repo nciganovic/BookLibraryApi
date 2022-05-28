@@ -1,5 +1,7 @@
 ﻿using Application.Commands.Languages;
+using Application.Exceptions;
 using DataAccess;
+using Domain;
 using System;
 
 namespace Implementation.EfCommands.LanguageCommands
@@ -17,7 +19,15 @@ namespace Implementation.EfCommands.LanguageCommands
 
         public void Execute(int request)
         {
-            throw new NotImplementedException();
+            Language item = context.Languages.Find(request);
+
+            if (item == null)
+                throw new EntityNotFoundException(request, "Language");
+
+            item.DeletedAt = DateTime.Now;
+
+            context.Languages.Update(item);
+            context.SaveChanges();
         }
     }
 }

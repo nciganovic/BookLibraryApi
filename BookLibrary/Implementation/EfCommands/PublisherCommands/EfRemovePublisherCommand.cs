@@ -1,4 +1,5 @@
 ﻿using Application.Commands.Publishers;
+using Application.Exceptions;
 using DataAccess;
 using Domain;
 using System;
@@ -18,7 +19,15 @@ namespace Implementation.EfCommands.PublisherCommands
 
         public void Execute(int request)
         {
-            throw new NotImplementedException();
+            Publisher item = context.Publishers.Find(request);
+
+            if (item == null)
+                throw new EntityNotFoundException(request, "Publisher");
+
+            item.DeletedAt = DateTime.Now;
+
+            context.Publishers.Update(item);
+            context.SaveChanges();
         }
     }
 }

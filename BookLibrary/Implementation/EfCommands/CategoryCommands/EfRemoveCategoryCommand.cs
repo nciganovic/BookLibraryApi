@@ -1,13 +1,14 @@
 ﻿using Application.Commands.Categories;
+using Application.Exceptions;
 using DataAccess;
 using Domain;
 using System;
 
 namespace Implementation.EfCommands.FormatCommands
 {
-    public class ERemoveCategoryCommand : BaseCommand, IRemoveCategoryCommand
+    public class EfRemoveCategoryCommand : BaseCommand, IRemoveCategoryCommand
     {
-        public ERemoveCategoryCommand(BookLibraryContext context) : base(context)
+        public EfRemoveCategoryCommand(BookLibraryContext context) : base(context)
         {
 
         }
@@ -18,7 +19,15 @@ namespace Implementation.EfCommands.FormatCommands
 
         public void Execute(int request)
         {
-            throw new NotImplementedException();
+            Category item = context.Categories.Find(request);
+
+            if (item == null)
+                throw new EntityNotFoundException(request, "Category");
+
+            item.DeletedAt = DateTime.Now;
+
+            context.Categories.Update(item);
+            context.SaveChanges();
         }
     }
 }
