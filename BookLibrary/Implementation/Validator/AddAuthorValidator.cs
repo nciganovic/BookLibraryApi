@@ -16,6 +16,10 @@ namespace Implementation.Validator
             RuleFor(x => x.LastName)
                 .NotEmpty()
                 .MaximumLength(30);
+
+            RuleFor(x => x.Bio)
+                .NotEmpty()
+                .MaximumLength(300);
         }
     }
 }

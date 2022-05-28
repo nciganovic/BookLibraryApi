@@ -35,6 +35,9 @@ namespace Implementation.Queries.AuthorQueries
             if (search.LastName != null)
                 query = query.Where(x => x.LastName.ToLower().Contains(search.LastName.ToLower()));
 
+            if (search.Bio != null)
+                query = query.Where(x => x.Bio.ToLower().Contains(search.Bio.ToLower()));
+
             return query.OrderBy(x => x.LastName).Select(x => _mapper.Map<Author, AuthorResultDto>(x)).ToList();
         }
     }

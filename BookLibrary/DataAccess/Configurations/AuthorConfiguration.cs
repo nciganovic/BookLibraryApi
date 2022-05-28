@@ -16,6 +16,10 @@ namespace DataAccess.Configurations
             builder.Property(x => x.LastName)
                 .HasMaxLength(30)
                 .IsRequired(true);
+
+            builder.Property(x => x.Bio)
+               .HasMaxLength(300)
+               .IsRequired(true);
         }
     }
 }
