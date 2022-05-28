@@ -1,13 +1,35 @@
 using Api.Core;
 using Application;
+using Application.Commands.Authors;
+using Application.Commands.Categories;
+using Application.Commands.Formats;
+using Application.Commands.Languages;
 using Application.Commands.MembershipCommands;
+using Application.Commands.Publishers;
+using Application.Commands.Roles;
 using Application.Interfaces;
 using Application.MapperProfiles;
+using Application.Queries.Authors;
+using Application.Queries.Categories;
+using Application.Queries.Format;
+using Application.Queries.Language;
 using Application.Queries.Memberships;
+using Application.Queries.Publishers;
+using Application.Queries.Roles;
 using DataAccess;
+using Implementation.EfCommands.FormatCommands;
+using Implementation.EfCommands.LanguageCommands;
 using Implementation.EfCommands.MembershipCommands;
+using Implementation.EfCommands.PublisherCommands;
+using Implementation.EfCommands.RoleCommands;
 using Implementation.Logging;
+using Implementation.Queries.AuthorQueries;
+using Implementation.Queries.CategoryQueries;
+using Implementation.Queries.FormatQueries;
+using Implementation.Queries.LanguageQueries;
 using Implementation.Queries.MembershipQueries;
+using Implementation.Queries.PublisherQueries;
+using Implementation.Queries.RoleQueries;
 using Implementation.Validator;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -63,14 +85,62 @@ namespace Api
             services.AddTransient<IUseCaseLogger, DatabaseUseCaseLogger>();
 
             services.AddDbContext<BookLibraryContext>();
+            
             services.AddTransient<IAddMembershipCommand, EfAddMembershipCommand>();
             services.AddTransient<IChangeMembershipCommand, EfChangeMembershipCommand>();
             services.AddTransient<IRemoveMembershipCommand, EfRemoveMembershipCommand>();
             services.AddTransient<IGetOneMembershipQuery, EfGetOneMembershipQuery>();
             services.AddTransient<IGetMembershipsQuery, EfGetMembershipsQuery>();
-
             services.AddTransient<AddMembershipValidator>();
             services.AddTransient<ChangeMembershipValidator>();
+
+            services.AddTransient<IAddRoleCommand, EfAddRoleCommand>();
+            services.AddTransient<IChangeRoleCommand, EfChangeRoleCommand>();
+            services.AddTransient<IRemoveRoleCommand, EfRemoveRoleCommand>();
+            services.AddTransient<IGetOneRoleQuery, EfGetOneRoleQuery>();
+            services.AddTransient<IGetRolesQuery, EfGetRolesQuery>();
+            services.AddTransient<AddRoleValidator>();
+            services.AddTransient<ChangeRoleValidator>();
+
+            services.AddTransient<IAddLanguageCommand, EfAddLanguageCommand>();
+            services.AddTransient<IChangeLanguageCommand, EfChangeLanguageCommand>();
+            services.AddTransient<IRemoveLanguageCommand, EfRemoveLanguageCommand>();
+            services.AddTransient<IGetOneLanguageQuery, EfGetOneLanguageQuery>();
+            services.AddTransient<IGetLanguagesQuery, EfGetLanguagesQuery>();
+            services.AddTransient<AddLanguageValidator>();
+            services.AddTransient<ChangeLanguageValidator>();
+
+            services.AddTransient<IAddPublisherCommand, EfAddPublisherCommand>();
+            services.AddTransient<IChangePublisherCommand, EfChangePublisherCommand>();
+            services.AddTransient<IRemovePublisherCommand, EfRemovePublisherCommand>();
+            services.AddTransient<IGetOnePublisherQuery, EfGetOnePublisherQuery>();
+            services.AddTransient<IGetPublishersQuery, EfGetPublishersQuery>();
+            services.AddTransient<AddPublisherValidator>();
+            services.AddTransient<ChangePublisherValidator>();
+
+            services.AddTransient<IAddFormatCommand, EfAddFormatCommand>();
+            services.AddTransient<IChangeFormatCommand, EfChangeFormatCommand>();
+            services.AddTransient<IRemoveFormatCommand, EfRemoveFormatCommand>();
+            services.AddTransient<IGetOneFormatQuery, EfGetOneFormatQuery>();
+            services.AddTransient<IGetFormatsQuery, EfGetFormatsQuery>();
+            services.AddTransient<AddFormatValidator>();
+            services.AddTransient<ChangeFormatValidator>();
+
+            services.AddTransient<IAddCategoryCommand, EfAddCategoryCommand>();
+            services.AddTransient<IChangeCategoryCommand, EfChangeCategoryCommand>();
+            services.AddTransient<IRemoveCategoryCommand, EfRemoveCategoryCommand>();
+            services.AddTransient<IGetOneCategoryQuery, EfGetOneCategoryQuery>();
+            services.AddTransient<IGetCategoriesQuery, EfGetCategoriesQuery>();
+            services.AddTransient<AddCategoryValidator>();
+            services.AddTransient<ChangeCategoryValidator>();
+
+            services.AddTransient<IAddAuthorCommand, EfAddAuthorCommand>();
+            services.AddTransient<IChangeAuthorCommand, EfChangeAuthorCommand>();
+            services.AddTransient<IRemoveAuthorCommand, EfRemoveAuthorCommand>();
+            services.AddTransient<IGetOneAuthorQuery, EfGetOneAuthorQuery>();
+            services.AddTransient<IGetAuthorsQuery, EfGetAuthorsQuery>();
+            services.AddTransient<AddAuthorValidator>();
+            services.AddTransient<ChangeAuthorValidator>();
 
             services.AddAutoMapper(typeof(DefaultProfile));
         }
