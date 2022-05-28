@@ -23,7 +23,7 @@ namespace Implementation.Validator
 
             RuleFor(x => x.Name)
                 .Must((dto, m) => IsNameUnique(dto))
-                .WithMessage("Publisher name = '{PropertyValue}' is already taken.");
+                .WithMessage("Publisher name = '{PropertyValue}' already exists.");
         }
 
         public bool ItemExists(int id)

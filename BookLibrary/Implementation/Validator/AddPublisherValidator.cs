@@ -20,7 +20,7 @@ namespace Implementation.Validator
 
             RuleFor(x => x.Name)
                 .Must(x => IsNameUnique(x))
-                .WithMessage("Name must have unique value");
+                .WithMessage("'{PropertyValue}' already exists.");
         }
 
         public bool IsNameUnique(string value)

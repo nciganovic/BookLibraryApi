@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Implementation.Validator
 {
-    class ChangeCategoryValidator : AbstractValidator<ChangeCategoryDto>
+    public class ChangeCategoryValidator : AbstractValidator<ChangeCategoryDto>
     {
         private BookLibraryContext _context;
 
@@ -23,7 +23,7 @@ namespace Implementation.Validator
 
             RuleFor(x => x.Name)
                 .Must((dto, m) => IsNameUnique(dto))
-                .WithMessage("Category name = '{PropertyValue}' is already taken.");
+                .WithMessage("Category name = '{PropertyValue}' already exists.");
         }
 
         public bool ItemExists(int id)
