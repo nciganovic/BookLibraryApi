@@ -1,18 +1,22 @@
 ﻿using Application.Dto.Category;
 using Application.Queries.Categories;
 using Application.Searches;
+using AutoMapper;
 using DataAccess;
 using Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Implementation.Queries.CategoryQueries
 {
     public class EfGetCategoriesQuery : BaseQuery<Category>, IGetCategoriesQuery
     {
-        public EfGetCategoriesQuery(BookLibraryContext context) : base(context)
-        {
+        private IMapper _mapper;
 
+        public EfGetCategoriesQuery(BookLibraryContext context, IMapper mapper) : base(context)
+        {
+            _mapper = mapper;
         }
 
         public int Id => 65;
@@ -25,7 +29,10 @@ namespace Implementation.Queries.CategoryQueries
 
             BasicFilter(ref query, search);
 
-            throw new NotImplementedException();
+            if (search.Name != null)
+                query = query.Where(x => x.Name.ToLower().Contains(search.Name.ToLower()));
+
+            return query.OrderBy(x => x.Name).Select(x => _mapper.Map<Category, CategoryResultDto>(x)).ToList();
         }
     }
 }

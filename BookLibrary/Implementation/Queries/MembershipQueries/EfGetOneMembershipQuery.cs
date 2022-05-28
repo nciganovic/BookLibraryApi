@@ -22,7 +22,7 @@ namespace Implementation.Queries.MembershipQueries
         public MembershipResultDto Execute(int search)
         {
             Membership membership = context.Memberships.Find(search);
-            if (membership.DeletedAt != null)
+            if (membership?.DeletedAt != null)
                 return null;
             return _mapper.Map<Membership, MembershipResultDto>(membership);
         }

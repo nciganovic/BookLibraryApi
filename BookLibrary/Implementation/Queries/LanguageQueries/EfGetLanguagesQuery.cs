@@ -1,21 +1,21 @@
 ﻿using Application.Dto.Language;
 using Application.Queries.Language;
 using Application.Searches;
+using AutoMapper;
 using DataAccess;
 using Domain;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Implementation.Queries.LanguageQueries
 {
     public class EfGetLanguagesQuery : BaseQuery<Language>, IGetLanguagesQuery
     {
-        public EfGetLanguagesQuery(BookLibraryContext context) : base(context)
-        {
+        private IMapper _mapper;
 
+        public EfGetLanguagesQuery(BookLibraryContext context, IMapper mapper) : base(context)
+        {
+            _mapper = mapper;
         }
 
         public int Id => 35;
@@ -28,7 +28,10 @@ namespace Implementation.Queries.LanguageQueries
 
             BasicFilter(ref query, search);
 
-            throw new NotImplementedException();
+            if (search.Name != null)
+                query = query.Where(x => x.Name.ToLower().Contains(search.Name.ToLower()));
+
+            return query.OrderBy(x => x.Name).Select(x => _mapper.Map<Language, LanguageResultDto>(x)).ToList();
         }
     }
 }

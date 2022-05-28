@@ -22,9 +22,10 @@ namespace Implementation.Queries.PublisherQueries
 
         public PublisherResultDto Execute(int search)
         {
-
-
-            throw new Exception();
+            Publisher publisher = context.Publishers.Find(search);
+            if (publisher?.DeletedAt != null)
+                return null;
+            return _mapper.Map<Publisher, PublisherResultDto>(publisher);
         }
     }
 }

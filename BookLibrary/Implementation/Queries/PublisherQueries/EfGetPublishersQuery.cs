@@ -1,18 +1,21 @@
 ﻿using Application.Dto.Publisher;
 using Application.Queries.Publishers;
 using Application.Searches;
+using AutoMapper;
 using DataAccess;
 using Domain;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Implementation.Queries.PublisherQueries
 {
     public class EfGetPublishersQuery : BaseQuery<Publisher>, IGetPublishersQuery
     {
-        public EfGetPublishersQuery(BookLibraryContext context) : base(context)
-        {
+        private IMapper _mapper;
 
+        public EfGetPublishersQuery(BookLibraryContext context, IMapper mapper) : base(context)
+        {
+            _mapper = mapper;
         }
 
         public int Id => 45;
@@ -25,7 +28,10 @@ namespace Implementation.Queries.PublisherQueries
 
             BasicFilter(ref query, search);
 
-            throw new NotImplementedException();
+            if (search.Name != null)
+                query = query.Where(x => x.Name.ToLower().Contains(search.Name.ToLower()));
+
+            return query.OrderBy(x => x.Name).Select(x => _mapper.Map<Publisher, PublisherResultDto>(x)).ToList();
         }
     }
 }

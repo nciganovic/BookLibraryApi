@@ -22,9 +22,10 @@ namespace Implementation.Queries.FormatQueries
 
         public FormatResultDto Execute(int search)
         {
-
-
-            throw new Exception();
+            Format format = context.Formats.Find(search);
+            if (format?.DeletedAt != null)
+                return null;
+            return _mapper.Map<Format, FormatResultDto>(format);
         }
     }
 }

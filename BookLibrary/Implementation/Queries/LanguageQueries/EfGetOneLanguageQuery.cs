@@ -26,9 +26,10 @@ namespace Implementation.Queries.LanguageQueries
 
         public LanguageResultDto Execute(int search)
         {
-
-
-            throw new Exception();
+            Language language = context.Languages.Find(search);
+            if (language?.DeletedAt != null)
+                return null;
+            return _mapper.Map<Language, LanguageResultDto>(language);
         }
     }
 }

@@ -5,13 +5,13 @@ using DataAccess;
 using Domain;
 using System;
 
-namespace Implementation.Queries.CategoriesQueries
+namespace Implementation.Queries.CategoryQueries
 {
-    public class EfGetOneCategoriesQuery : BaseQuery<Category>, IGetOneCategoryQuery
+    public class EfGetOneCategoryQuery : BaseQuery<Category>, IGetOneCategoryQuery
     {
         private IMapper _mapper;
 
-        public EfGetOneCategoriesQuery(BookLibraryContext context, IMapper mapper) : base(context)
+        public EfGetOneCategoryQuery(BookLibraryContext context, IMapper mapper) : base(context)
         {
             _mapper = mapper;
         }
@@ -22,9 +22,10 @@ namespace Implementation.Queries.CategoriesQueries
 
         public CategoryResultDto Execute(int search)
         {
-
-
-            throw new Exception();
+            Category category = context.Categories.Find(search);
+            if (category?.DeletedAt != null)
+                return null;
+            return _mapper.Map<Category, CategoryResultDto>(category);
         }
     }
 }
