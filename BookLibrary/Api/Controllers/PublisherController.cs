@@ -1,8 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using Application;
+using Application.Commands.Publishers;
+using Application.Dto.Publisher;
+using Application.Queries.Publishers;
+using Application.Searches;
+using AutoMapper;
+using Domain;
+using Implementation.ResponseMessages;
+using Implementation.Validator;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,36 +18,70 @@ namespace Api.Controllers
     [ApiController]
     public class PublisherController : ControllerBase
     {
-        // GET: api/<PublisherController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private UseCaseExecutor _useCaseExecutor;
+        private IMapper _mapper;
+
+        public PublisherController(UseCaseExecutor useCaseExecutor, IMapper mapper)
         {
-            return new string[] { "value1", "value2" };
+            _useCaseExecutor = useCaseExecutor;
+            _mapper = mapper;
         }
 
-        // GET api/<PublisherController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id, [FromServices] IGetOnePublisherQuery query)
         {
-            return "value";
+            PublisherResultDto result = _useCaseExecutor.ExecuteQuery(query, id);
+            return Ok(result);
         }
 
-        // POST api/<PublisherController>
+        [HttpGet]
+        public IActionResult Get([FromBody] PublisherSearch search,
+              [FromServices] IGetPublishersQuery query)
+        {
+            IEnumerable<PublisherResultDto> result = _useCaseExecutor.ExecuteQuery(query, search);
+            return Ok(result);
+        }
+
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] AddPublisherDto dto
+            , [FromServices] IAddPublisherCommand command
+            , [FromServices] AddPublisherValidator validator)
         {
+            var result = validator.Validate(dto);
+
+            if (result.IsValid)
+            {
+                Publisher publisher = _mapper.Map<Publisher>(dto);
+                _useCaseExecutor.ExecuteCommand(command, publisher);
+                return Ok("Publisher added successfully");
+            }
+
+            return UnprocessableEntity(UnprocessableEntityResponse.Message(result.Errors));
         }
 
-        // PUT api/<PublisherController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] ChangePublisherDto dto
+            , [FromServices] IChangePublisherCommand command
+            , [FromServices] ChangePublisherValidator validator)
         {
+            dto.Id = id;
+            var result = validator.Validate(dto);
+
+            if (result.IsValid)
+            {
+                Publisher publisher = _mapper.Map<Publisher>(dto);
+                _useCaseExecutor.ExecuteCommand(command, publisher);
+                return Ok("Publisher changed successfully");
+            }
+
+            return UnprocessableEntity(UnprocessableEntityResponse.Message(result.Errors));
         }
 
-        // DELETE api/<PublisherController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id, [FromServices] IRemovePublisherCommand command)
         {
+            _useCaseExecutor.ExecuteCommand(command, id);
+            return Ok("Publisher removed successfully.");
         }
     }
 }

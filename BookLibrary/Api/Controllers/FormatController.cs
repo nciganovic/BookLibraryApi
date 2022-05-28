@@ -1,8 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using Application;
+using Application.Commands.Formats;
+using Application.Dto.Format;
+using Application.Queries.Format;
+using Application.Searches;
+using AutoMapper;
+using Domain;
+using Implementation.ResponseMessages;
+using Implementation.Validator;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,36 +18,70 @@ namespace Api.Controllers
     [ApiController]
     public class FormatController : ControllerBase
     {
-        // GET: api/<FormatController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private UseCaseExecutor _useCaseExecutor;
+        private IMapper _mapper;
+
+        public FormatController(UseCaseExecutor useCaseExecutor, IMapper mapper)
         {
-            return new string[] { "value1", "value2" };
+            _useCaseExecutor = useCaseExecutor;
+            _mapper = mapper;
         }
 
-        // GET api/<FormatController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id, [FromServices] IGetOneFormatQuery query)
         {
-            return "value";
+            FormatResultDto result = _useCaseExecutor.ExecuteQuery(query, id);
+            return Ok(result);
         }
 
-        // POST api/<FormatController>
+        [HttpGet]
+        public IActionResult Get([FromBody] FormatSearch search,
+              [FromServices] IGetFormatsQuery query)
+        {
+            IEnumerable<FormatResultDto> result = _useCaseExecutor.ExecuteQuery(query, search);
+            return Ok(result);
+        }
+
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] AddFormatDto dto
+            , [FromServices] IAddFormatCommand command
+            , [FromServices] AddFormatValidator validator)
         {
+            var result = validator.Validate(dto);
+
+            if (result.IsValid)
+            {
+                Format format = _mapper.Map<Format>(dto);
+                _useCaseExecutor.ExecuteCommand(command, format);
+                return Ok("Format added successfully");
+            }
+
+            return UnprocessableEntity(UnprocessableEntityResponse.Message(result.Errors));
         }
 
-        // PUT api/<FormatController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] ChangeFormatDto dto
+            , [FromServices] IChangeFormatCommand command
+            , [FromServices] ChangeFormatValidator validator)
         {
+            dto.Id = id;
+            var result = validator.Validate(dto);
+
+            if (result.IsValid)
+            {
+                Format format = _mapper.Map<Format>(dto);
+                _useCaseExecutor.ExecuteCommand(command, format);
+                return Ok("Format changed successfully");
+            }
+
+            return UnprocessableEntity(UnprocessableEntityResponse.Message(result.Errors));
         }
 
-        // DELETE api/<FormatController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id, [FromServices] IRemoveFormatCommand command)
         {
+            _useCaseExecutor.ExecuteCommand(command, id);
+            return Ok("Format removed successfully.");
         }
     }
 }
