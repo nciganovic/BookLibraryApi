@@ -1,6 +1,7 @@
 using Api.Core;
 using Application;
 using Application.Commands.Authors;
+using Application.Commands.Books;
 using Application.Commands.Categories;
 using Application.Commands.Formats;
 using Application.Commands.Languages;
@@ -10,6 +11,7 @@ using Application.Commands.Roles;
 using Application.Interfaces;
 using Application.MapperProfiles;
 using Application.Queries.Authors;
+using Application.Queries.Books;
 using Application.Queries.Categories;
 using Application.Queries.Format;
 using Application.Queries.Language;
@@ -17,6 +19,7 @@ using Application.Queries.Memberships;
 using Application.Queries.Publishers;
 using Application.Queries.Roles;
 using DataAccess;
+using Implementation.EfCommands.BookCommands;
 using Implementation.EfCommands.FormatCommands;
 using Implementation.EfCommands.LanguageCommands;
 using Implementation.EfCommands.MembershipCommands;
@@ -24,6 +27,7 @@ using Implementation.EfCommands.PublisherCommands;
 using Implementation.EfCommands.RoleCommands;
 using Implementation.Logging;
 using Implementation.Queries.AuthorQueries;
+using Implementation.Queries.BookQueries;
 using Implementation.Queries.CategoryQueries;
 using Implementation.Queries.FormatQueries;
 using Implementation.Queries.LanguageQueries;
@@ -141,6 +145,14 @@ namespace Api
             services.AddTransient<IGetAuthorsQuery, EfGetAuthorsQuery>();
             services.AddTransient<AddAuthorValidator>();
             services.AddTransient<ChangeAuthorValidator>();
+
+            services.AddTransient<IAddBookCommand, EfAddBookCommand>();
+            services.AddTransient<IChangeBookCommand, EfChangeBookCommand>();
+            services.AddTransient<IRemoveBookCommand, EfRemoveBookCommand>();
+            services.AddTransient<IGetOneBookQuery, EfGetOneBookQuery>();
+            services.AddTransient<IGetBooksQuery, EfGetBooksQuery>();
+            services.AddTransient<AddBookValidator>();
+            services.AddTransient<ChangeBookValidator>();
 
             services.AddAutoMapper(typeof(DefaultProfile));
         }

@@ -25,7 +25,7 @@ namespace DataAccess.Configurations
                .IsRequired(true);
 
             builder.Property(x => x.CoverImageSource)
-              .IsRequired(true);
+              .IsRequired(false);
 
             builder.Property(x => x.ContentFileSource)
               .IsRequired(false);

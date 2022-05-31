@@ -1,4 +1,5 @@
 ﻿using Application.Dto.Author;
+using Application.Dto.Book;
 using Application.Dto.Category;
 using Application.Dto.Format;
 using Application.Dto.Language;
@@ -7,6 +8,8 @@ using Application.Dto.Publisher;
 using Application.Dto.Role;
 using AutoMapper;
 using Domain;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Application.MapperProfiles
 {
@@ -41,6 +44,18 @@ namespace Application.MapperProfiles
             CreateMap<AddAuthorDto, Author>();
             CreateMap<ChangeAuthorDto, Author>();
             CreateMap<Author, AuthorResultDto>();
+
+            CreateMap<AddBookDto, Book>();
+            CreateMap<ChangeBookDto, Book>();
+            CreateMap<Book, BookResultDto>().ForMember(b => b.Authors, op => op.MapFrom(new AuthorResolver()));
+        }
+    }
+
+    public class AuthorResolver : IValueResolver<Book, BookResultDto, List<string>>
+    {
+        public List<string> Resolve(Book source, BookResultDto destination, List<string> member, ResolutionContext context)
+        {
+            return source.Authors.Select(x => x.FirstName + " " + x.LastName).ToList();
         }
     }
 }

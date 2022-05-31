@@ -20,7 +20,7 @@ namespace Implementation.Logging
             _context.UseCaseLogs.Add(new UseCaseLog
             {
                 Actor = applicationActor.Identity,
-                Data = JsonConvert.SerializeObject(useCase),
+                Data = JsonConvert.SerializeObject(useCaseData),
                 Date = DateTime.Now,
                 UseCaseName = useCase.Name
             });

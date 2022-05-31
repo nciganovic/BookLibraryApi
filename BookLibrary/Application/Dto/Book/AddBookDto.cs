@@ -1,6 +1,8 @@
-﻿namespace Application.Dto.Book
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Application.Dto.Book
 {
-    public class AddBookDto
+    public class AddBookDto : IBookCommandDto
     {
         public string Title { get; set; }
         public string Description { get; set; }
@@ -14,5 +16,7 @@
         public int CategoryId { get; set; }
         public int FormatId { get; set; }
         public int[] AuthorIds { get; set; }
+        public IFormFile CoverImage { get; set; }
+        public IFormFile ContentFile { get; set; }
     }
 }
