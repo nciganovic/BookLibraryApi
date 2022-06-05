@@ -3,6 +3,7 @@ using Application.Queries.Users;
 using AutoMapper;
 using DataAccess;
 using Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace Implementation.Queries.UserQueries
 
         public UserResultDto Execute(string search)
         {
-            User user = context.Users.Where(x => x.Email == search).FirstOrDefault();
+            User user = context.Users.Include(x => x.Membership).Include(x => x.Role).Where(x => x.Email == search).FirstOrDefault();
             return _mapper.Map<User, UserResultDto>(user);
         }
     }

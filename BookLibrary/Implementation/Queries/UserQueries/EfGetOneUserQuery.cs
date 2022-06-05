@@ -3,11 +3,8 @@ using Application.Queries.Users;
 using AutoMapper;
 using DataAccess;
 using Domain;
-using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Implementation.Queries.UserQueries
 {
@@ -26,7 +23,7 @@ namespace Implementation.Queries.UserQueries
 
         public UserResultDto Execute(int search)
         {
-            User user = context.Users.Find(search);
+            User user = context.Users.Include(x => x.Membership).Include(x => x.Role).Where(x => x.Id == search).FirstOrDefault();
             return _mapper.Map<User, UserResultDto>(user);
         }
     }

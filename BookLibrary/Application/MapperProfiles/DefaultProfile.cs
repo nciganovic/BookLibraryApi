@@ -6,6 +6,7 @@ using Application.Dto.Language;
 using Application.Dto.Membership;
 using Application.Dto.Publisher;
 using Application.Dto.Role;
+using Application.Dto.User;
 using AutoMapper;
 using Domain;
 using System.Collections.Generic;
@@ -48,6 +49,10 @@ namespace Application.MapperProfiles
             CreateMap<AddBookDto, Book>();
             CreateMap<ChangeBookDto, Book>();
             CreateMap<Book, BookResultDto>().ForMember(b => b.Authors, op => op.MapFrom(new AuthorResolver()));
+
+            CreateMap<AddUserDto, User>();
+            CreateMap<ChangeUserDto, User>();
+            CreateMap<User, UserResultDto>();
         }
     }
 

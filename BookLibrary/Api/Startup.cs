@@ -8,6 +8,8 @@ using Application.Commands.Languages;
 using Application.Commands.MembershipCommands;
 using Application.Commands.Publishers;
 using Application.Commands.Roles;
+using Application.Commands.Users;
+using Application.Email;
 using Application.Interfaces;
 using Application.MapperProfiles;
 using Application.Queries.Authors;
@@ -18,6 +20,8 @@ using Application.Queries.Language;
 using Application.Queries.Memberships;
 using Application.Queries.Publishers;
 using Application.Queries.Roles;
+using Application.Queries.Users;
+using Application.Settings;
 using DataAccess;
 using Implementation.EfCommands.BookCommands;
 using Implementation.EfCommands.FormatCommands;
@@ -25,6 +29,8 @@ using Implementation.EfCommands.LanguageCommands;
 using Implementation.EfCommands.MembershipCommands;
 using Implementation.EfCommands.PublisherCommands;
 using Implementation.EfCommands.RoleCommands;
+using Implementation.EfCommands.UserCommands;
+using Implementation.Email;
 using Implementation.Logging;
 using Implementation.Queries.AuthorQueries;
 using Implementation.Queries.BookQueries;
@@ -34,6 +40,7 @@ using Implementation.Queries.LanguageQueries;
 using Implementation.Queries.MembershipQueries;
 using Implementation.Queries.PublisherQueries;
 using Implementation.Queries.RoleQueries;
+using Implementation.Queries.UserQueries;
 using Implementation.Validator;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -153,6 +160,18 @@ namespace Api
             services.AddTransient<IGetBooksQuery, EfGetBooksQuery>();
             services.AddTransient<AddBookValidator>();
             services.AddTransient<ChangeBookValidator>();
+
+            services.AddTransient<IAddUserCommand, EfAddUserCommand>();
+            services.AddTransient<IChangeUserCommand, EfChangeUserCommand>();
+            services.AddTransient<IRemoveUserCommand, EfRemoveUserCommand>();
+            services.AddTransient<IGetOneUserQuery, EfGetOneUserQuery>();
+            services.AddTransient<IGetUsersQuery, EfGetUsersQuery>();
+            services.AddTransient<AddUserValidator>();
+            services.AddTransient<ChangeUserValidator>();
+
+            services.AddTransient<IEmailSender, SmtpEmailSender>();
+
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
 
             services.AddAutoMapper(typeof(DefaultProfile));
         }

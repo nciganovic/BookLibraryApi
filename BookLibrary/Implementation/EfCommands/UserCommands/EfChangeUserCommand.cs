@@ -1,11 +1,8 @@
 ﻿using Application.Commands.Users;
+using Application.Hash;
 using DataAccess;
 using Domain;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Implementation.EfCommands.UserCommands
 {
@@ -22,11 +19,14 @@ namespace Implementation.EfCommands.UserCommands
 
         public void Execute(User request)
         {
-            User item = context.Users.Find(request.Id);
+            User user = context.Users.Find(request.Id);
+            HashSalt hashSalt = Password.GenerateSaltedHash(64, request.Password);
 
-            context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+            context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
 
             request.UpdatedAt = DateTime.Now;
+            request.Password = hashSalt.Hash;
+            request.Salt = hashSalt.Salt;
 
             var entity = context.Users.Attach(request);
             entity.State = Microsoft.EntityFrameworkCore.EntityState.Modified;

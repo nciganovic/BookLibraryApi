@@ -1,6 +1,6 @@
 ﻿namespace Application.Dto.User
 {
-    public class AddUserDto : IUserCommandDto
+    public interface IUserCommandDto
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
