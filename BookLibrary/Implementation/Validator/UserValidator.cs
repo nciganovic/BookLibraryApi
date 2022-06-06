@@ -31,7 +31,7 @@ namespace Implementation.Validator
                 .WithMessage("Role with id = {PropertyValue} does not exist.");
 
             RuleFor(x => x.MembershipId)
-                .Must(x => MembershipUnique(x))
+                .Must(x => MembershipExists(x))
                 .WithMessage("Membership with id = {PropertyValue} does not exist.");
         }
 
@@ -40,7 +40,7 @@ namespace Implementation.Validator
             return _context.Roles.Where(x => x.Id == value).FirstOrDefault() != null;
         }
 
-        public bool MembershipUnique(int value)
+        public bool MembershipExists(int value)
         {
             return _context.Memberships.Where(x => x.Id == value).FirstOrDefault() != null;
         }

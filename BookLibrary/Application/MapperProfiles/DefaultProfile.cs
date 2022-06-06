@@ -1,4 +1,5 @@
-﻿using Application.Dto.Author;
+﻿using Application.Dto.Account;
+using Application.Dto.Author;
 using Application.Dto.Book;
 using Application.Dto.Category;
 using Application.Dto.Format;
@@ -52,7 +53,10 @@ namespace Application.MapperProfiles
 
             CreateMap<AddUserDto, User>();
             CreateMap<ChangeUserDto, User>();
+            CreateMap<RegisterDto, User>();
             CreateMap<User, UserResultDto>();
+            CreateMap<ChangeProfileDto, User>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
     }
 

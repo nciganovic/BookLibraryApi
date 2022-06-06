@@ -1,5 +1,6 @@
 using Api.Core;
 using Application;
+using Application.Commands.Account;
 using Application.Commands.Authors;
 using Application.Commands.Books;
 using Application.Commands.Categories;
@@ -23,6 +24,7 @@ using Application.Queries.Roles;
 using Application.Queries.Users;
 using Application.Settings;
 using DataAccess;
+using Implementation.EfCommands.AccountCommands;
 using Implementation.EfCommands.BookCommands;
 using Implementation.EfCommands.FormatCommands;
 using Implementation.EfCommands.LanguageCommands;
@@ -42,14 +44,18 @@ using Implementation.Queries.PublisherQueries;
 using Implementation.Queries.RoleQueries;
 using Implementation.Queries.UserQueries;
 using Implementation.Validator;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using System;
+using System.Text;
 
 namespace Api
 {
@@ -72,25 +78,7 @@ namespace Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
             });
 
-            /*
-            services.AddTransient<IApplicationActor>(x =>
-            {
-                var accessor = x.GetService<IHttpContextAccessor>();
-                var user = accessor.HttpContext.User;
-
-                if (user.FindFirst("ActorData") == null)
-                {
-                    return new AnonymousActor();
-                }
-
-                var actorString = user.FindFirst("ActorData").Value;
-
-                var actor = JsonConvert.DeserializeObject<JwtActor>(actorString);
-
-                return actor;
-            });*/
-
-            services.AddTransient<IApplicationActor, FakeAdminActor>();
+            //services.AddTransient<IApplicationActor, FakeAdminActor>();
 
             services.AddTransient<UseCaseExecutor>();
             services.AddTransient<IUseCaseLogger, DatabaseUseCaseLogger>();
@@ -169,9 +157,59 @@ namespace Api
             services.AddTransient<AddUserValidator>();
             services.AddTransient<ChangeUserValidator>();
 
+            services.AddTransient<LoginValidator>();
+            services.AddTransient<RegisterValidator>();
+            services.AddTransient<ChangeProfileValidator>();
+            services.AddTransient<IRegisterCommand, EfRegisterCommand>();
+            services.AddTransient<IChangeProfileCommand, EfChangeProfileCommand>();
+
             services.AddTransient<IEmailSender, SmtpEmailSender>();
 
+            services.AddTransient<JwtManager>();
+
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.Configure<JwtSettings>(Configuration.GetSection("JwtSettings"));
+
+            services.AddHttpContextAccessor();
+            services.AddTransient<IApplicationActor>(x =>
+            {
+                var accessor = x.GetService<IHttpContextAccessor>();
+                var user = accessor.HttpContext.User;
+
+                if (user.FindFirst("ActorData") == null)
+                {
+                    return new AnonymousActor();
+                }
+
+                var actorString = user.FindFirst("ActorData").Value;
+
+                var actor = JsonConvert.DeserializeObject<JwtActor>(actorString);
+
+                return actor;
+            });
+
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(cfg =>
+            {
+                cfg.RequireHttpsMetadata = false;
+                cfg.SaveToken = true;
+                cfg.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = Configuration["JwtSettings:Issuer"],
+                    ValidateIssuer = true,
+                    ValidAudience = Configuration["JwtSettings:Audience"],
+                    ValidateAudience = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtSettings:Secret"])),
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
 
             services.AddAutoMapper(typeof(DefaultProfile));
         }
@@ -190,6 +228,7 @@ namespace Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

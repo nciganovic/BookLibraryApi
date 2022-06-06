@@ -11,6 +11,7 @@ namespace Implementation.Validator
         {
             RuleFor(x => x.Email)
              .NotEmpty()
+             .EmailAddress()
              .Must(x => EmailUnique(x))
              .WithMessage("Email {PropertyValue} is already taken.");
         }
