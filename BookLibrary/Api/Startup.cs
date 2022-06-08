@@ -8,6 +8,7 @@ using Application.Commands.Formats;
 using Application.Commands.Languages;
 using Application.Commands.MembershipCommands;
 using Application.Commands.Publishers;
+using Application.Commands.Reservations;
 using Application.Commands.Roles;
 using Application.Commands.Users;
 using Application.Email;
@@ -23,6 +24,7 @@ using Application.Queries.Publishers;
 using Application.Queries.Roles;
 using Application.Queries.Users;
 using Application.Settings;
+using AutoMapper;
 using DataAccess;
 using Implementation.EfCommands.AccountCommands;
 using Implementation.EfCommands.BookCommands;
@@ -30,6 +32,7 @@ using Implementation.EfCommands.FormatCommands;
 using Implementation.EfCommands.LanguageCommands;
 using Implementation.EfCommands.MembershipCommands;
 using Implementation.EfCommands.PublisherCommands;
+using Implementation.EfCommands.ReservationCommands;
 using Implementation.EfCommands.RoleCommands;
 using Implementation.EfCommands.UserCommands;
 using Implementation.Email;
@@ -157,6 +160,12 @@ namespace Api
             services.AddTransient<AddUserValidator>();
             services.AddTransient<ChangeUserValidator>();
 
+            services.AddTransient<IAddReservationCommand, EfAddReservationCommand>();
+            services.AddTransient<IChangeReservationCommand, EfChangeReservationCommand>();
+            services.AddTransient<IRemoveReservationCommand, EfRemoveReservationCommand>();
+            services.AddTransient<AddReservationValidator>();
+            services.AddTransient<ChangeReservationValidator>();
+
             services.AddTransient<LoginValidator>();
             services.AddTransient<RegisterValidator>();
             services.AddTransient<ChangeProfileValidator>();
@@ -211,7 +220,11 @@ namespace Api
                 };
             });
 
-            services.AddAutoMapper(typeof(DefaultProfile));
+            //services.AddAutoMapper(typeof(DefaultProfile));
+            services.AddScoped(provider => new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new DefaultProfile(provider.GetService<BookLibraryContext>()));
+            }).CreateMapper());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
