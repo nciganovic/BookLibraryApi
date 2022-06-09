@@ -74,6 +74,7 @@ namespace Application.MapperProfiles
                 .ForMember(b => b.Books, op => op.MapFrom(new BookIdsResolver(_context)))
                 .ForMember(b => b.StartTime, op => op.MapFrom(new StartDateResolver()))
                 .ForMember(b => b.EndTime, op => op.MapFrom(new EndTimeResolver()));
+            CreateMap<Reservation, ReservationResultDto>();
         }
     }
 

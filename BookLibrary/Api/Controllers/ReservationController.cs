@@ -1,6 +1,8 @@
 ﻿using Application;
 using Application.Commands.Reservations;
 using Application.Dto.Reservation;
+using Application.Queries.Reservations;
+using Application.Searches;
 using AutoMapper;
 using Domain;
 using Implementation.ResponseMessages;
@@ -27,16 +29,18 @@ namespace Api.Controllers
 
         // GET: api/<ReservationController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get([FromBody] ReservationSearch search, [FromServices] IGetReservationsQuery query)
         {
-            return new string[] { "value1", "value2" };
+            IEnumerable<ReservationResultDto> dtos = _executor.ExecuteQuery(query, search);
+            return Ok(dtos);
         }
 
         // GET api/<ReservationController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id, [FromServices] IGetOneReservationQuery query)
         {
-            return "value";
+            ReservationResultDto dto = _executor.ExecuteQuery(query, id);
+            return Ok(dto);
         }
 
         // POST api/<ReservationController>

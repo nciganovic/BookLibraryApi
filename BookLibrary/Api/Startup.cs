@@ -21,6 +21,7 @@ using Application.Queries.Format;
 using Application.Queries.Language;
 using Application.Queries.Memberships;
 using Application.Queries.Publishers;
+using Application.Queries.Reservations;
 using Application.Queries.Roles;
 using Application.Queries.Users;
 using Application.Settings;
@@ -44,6 +45,7 @@ using Implementation.Queries.FormatQueries;
 using Implementation.Queries.LanguageQueries;
 using Implementation.Queries.MembershipQueries;
 using Implementation.Queries.PublisherQueries;
+using Implementation.Queries.ReservationQueries;
 using Implementation.Queries.RoleQueries;
 using Implementation.Queries.UserQueries;
 using Implementation.Validator;
@@ -163,6 +165,8 @@ namespace Api
             services.AddTransient<IAddReservationCommand, EfAddReservationCommand>();
             services.AddTransient<IChangeReservationCommand, EfChangeReservationCommand>();
             services.AddTransient<IRemoveReservationCommand, EfRemoveReservationCommand>();
+            services.AddTransient<IGetOneReservationQuery, EfGetOneReservationQuery>();
+            services.AddTransient<IGetReservationsQuery, EfGetReservationsQuery>();
             services.AddTransient<AddReservationValidator>();
             services.AddTransient<ChangeReservationValidator>();
 
