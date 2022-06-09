@@ -1,4 +1,5 @@
 using Api.Core;
+using Api.Middleware;
 using Application;
 using Application.Commands.Account;
 using Application.Commands.Authors;
@@ -251,6 +252,7 @@ namespace Api
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
