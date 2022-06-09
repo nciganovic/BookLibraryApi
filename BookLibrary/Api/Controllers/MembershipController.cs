@@ -13,9 +13,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.Queries.Memberships;
 using Application.Searches;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MembershipController : ControllerBase

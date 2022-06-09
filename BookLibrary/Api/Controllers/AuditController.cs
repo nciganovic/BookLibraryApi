@@ -2,6 +2,7 @@
 using Application.Queries.UseCaseLogs;
 using Application.Searches;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace Api.Controllers
         }
 
         // GET: api/<AuditController>
+        [Authorize]
         [HttpGet]
         public IActionResult Get([FromBody] UseCaseLogSearch search, [FromServices] IGetUseCaseLogsQuery query)
         {
