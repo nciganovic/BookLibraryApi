@@ -23,6 +23,7 @@ using Application.Queries.Memberships;
 using Application.Queries.Publishers;
 using Application.Queries.Reservations;
 using Application.Queries.Roles;
+using Application.Queries.UseCaseLogs;
 using Application.Queries.Users;
 using Application.Settings;
 using AutoMapper;
@@ -47,6 +48,7 @@ using Implementation.Queries.MembershipQueries;
 using Implementation.Queries.PublisherQueries;
 using Implementation.Queries.ReservationQueries;
 using Implementation.Queries.RoleQueries;
+using Implementation.Queries.UseCaseLogQueries;
 using Implementation.Queries.UserQueries;
 using Implementation.Validator;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -169,6 +171,8 @@ namespace Api
             services.AddTransient<IGetReservationsQuery, EfGetReservationsQuery>();
             services.AddTransient<AddReservationValidator>();
             services.AddTransient<ChangeReservationValidator>();
+
+            services.AddTransient<IGetUseCaseLogsQuery, EfGetUseCaseLogsQuery>();
 
             services.AddTransient<LoginValidator>();
             services.AddTransient<RegisterValidator>();

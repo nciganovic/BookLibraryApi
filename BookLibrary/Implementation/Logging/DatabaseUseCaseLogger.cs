@@ -21,7 +21,7 @@ namespace Implementation.Logging
             {
                 Actor = applicationActor.Identity,
                 Data = JsonConvert.SerializeObject(useCaseData),
-                Date = DateTime.Now,
+                CreatedAt = DateTime.Now,
                 UseCaseName = useCase.Name
             });
 
