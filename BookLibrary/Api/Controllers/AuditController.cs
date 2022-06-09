@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AuditController : ControllerBase
@@ -25,7 +26,6 @@ namespace Api.Controllers
         }
 
         // GET: api/<AuditController>
-        [Authorize]
         [HttpGet]
         public IActionResult Get([FromBody] UseCaseLogSearch search, [FromServices] IGetUseCaseLogsQuery query)
         {
