@@ -10,6 +10,6 @@ namespace Api.Core
 
         public string Identity => "Anonymous actor";
 
-        public IEnumerable<int> AllowedUseCases => Enumerable.Range(0, 1000);
+        public IEnumerable<int> AllowedUseCases => new int[] { 101 }; //Only register and login allowed
     }
 }
