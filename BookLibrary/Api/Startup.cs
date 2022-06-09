@@ -10,6 +10,7 @@ using Application.Commands.Languages;
 using Application.Commands.MembershipCommands;
 using Application.Commands.Publishers;
 using Application.Commands.Reservations;
+using Application.Commands.RoleCases;
 using Application.Commands.Roles;
 using Application.Commands.Users;
 using Application.Email;
@@ -23,6 +24,7 @@ using Application.Queries.Language;
 using Application.Queries.Memberships;
 using Application.Queries.Publishers;
 using Application.Queries.Reservations;
+using Application.Queries.RoleCases;
 using Application.Queries.Roles;
 using Application.Queries.UseCaseLogs;
 using Application.Queries.Users;
@@ -36,6 +38,7 @@ using Implementation.EfCommands.LanguageCommands;
 using Implementation.EfCommands.MembershipCommands;
 using Implementation.EfCommands.PublisherCommands;
 using Implementation.EfCommands.ReservationCommands;
+using Implementation.EfCommands.RoleCaseCommands;
 using Implementation.EfCommands.RoleCommands;
 using Implementation.EfCommands.UserCommands;
 using Implementation.Email;
@@ -49,6 +52,7 @@ using Implementation.Queries.MembershipQueries;
 using Implementation.Queries.PublisherQueries;
 using Implementation.Queries.ReservationQueries;
 using Implementation.Queries.RoleQueries;
+using Implementation.Queries.RoleUseCaseQueries;
 using Implementation.Queries.UseCaseLogQueries;
 using Implementation.Queries.UserQueries;
 using Implementation.Validator;
@@ -180,6 +184,13 @@ namespace Api
             services.AddTransient<ChangeProfileValidator>();
             services.AddTransient<IRegisterCommand, EfRegisterCommand>();
             services.AddTransient<IChangeProfileCommand, EfChangeProfileCommand>();
+
+            services.AddTransient<IGetCasesByRoleIdQuery, EfGetCasesByRoleIdQuery>();
+            services.AddTransient<IAddRoleCaseCommand, EfAddRoleCaseCommand>();
+            services.AddTransient<IGetOneRoleCaseQuery, EfGetOneRoleUseCaseQuery>();
+            services.AddTransient<IRemoveRoleCaseCommand, EfRemoveRoleCaseCommand>();
+            services.AddTransient<AddRoleCaseValidator>();
+            services.AddTransient<RemoveRoleCaseValidator>();
 
             services.AddTransient<IEmailSender, SmtpEmailSender>();
 

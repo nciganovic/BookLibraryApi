@@ -8,6 +8,7 @@ using Application.Dto.Membership;
 using Application.Dto.Publisher;
 using Application.Dto.Reservation;
 using Application.Dto.Role;
+using Application.Dto.RoleCase;
 using Application.Dto.User;
 using Application.Extensions;
 using AutoMapper;
@@ -75,6 +76,8 @@ namespace Application.MapperProfiles
                 .ForMember(b => b.StartTime, op => op.MapFrom(new StartDateResolver()))
                 .ForMember(b => b.EndTime, op => op.MapFrom(new EndTimeResolver()));
             CreateMap<Reservation, ReservationResultDto>();
+
+            CreateMap<RoleCaseDto, RoleUserCase>();
         }
     }
 
