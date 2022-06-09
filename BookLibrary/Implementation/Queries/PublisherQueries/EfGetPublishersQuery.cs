@@ -26,10 +26,10 @@ namespace Implementation.Queries.PublisherQueries
         {
             var query = this.context.Publishers.AsQueryable();
 
-            BasicFilter(ref query, search);
-
             if (search.Name != null)
                 query = query.Where(x => x.Name.ToLower().Contains(search.Name.ToLower()));
+
+            BasicFilter(ref query, search);
 
             return query.OrderBy(x => x.Name).Select(x => _mapper.Map<Publisher, PublisherResultDto>(x)).ToList();
         }

@@ -26,8 +26,6 @@ namespace Implementation.Queries.MembershipQueries
         {
             var query = this.context.Memberships.AsQueryable();
 
-            BasicFilter(ref query, search);
-
             if (search.Name != null)
                 query = query.Where(x => x.Name.ToLower().Contains(search.Name.ToLower()));
 
@@ -39,6 +37,8 @@ namespace Implementation.Queries.MembershipQueries
 
             if (search.MonthlyFeeTo != null)
                 query = query.Where(x => search.MonthlyFeeTo >= x.MonthlyFee);
+
+            BasicFilter(ref query, search);
 
             return query.OrderBy(x => x.MonthlyFee).Select(x => _mapper.Map<Membership, MembershipResultDto>(x)).ToList();
         }

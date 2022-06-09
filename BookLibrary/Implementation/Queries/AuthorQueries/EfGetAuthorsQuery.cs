@@ -27,8 +27,6 @@ namespace Implementation.Queries.AuthorQueries
         {
             var query = this.context.Authors.AsQueryable();
 
-            BasicFilter(ref query, search);
-
             if (search.FirstName != null)
                 query = query.Where(x => x.FirstName.ToLower().Contains(search.FirstName.ToLower()));
 
@@ -37,6 +35,8 @@ namespace Implementation.Queries.AuthorQueries
 
             if (search.Bio != null)
                 query = query.Where(x => x.Bio.ToLower().Contains(search.Bio.ToLower()));
+
+            BasicFilter(ref query, search);
 
             return query.OrderBy(x => x.LastName).Select(x => _mapper.Map<Author, AuthorResultDto>(x)).ToList();
         }

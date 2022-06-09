@@ -26,10 +26,10 @@ namespace Implementation.Queries.LanguageQueries
         {
             var query = this.context.Languages.AsQueryable();
 
-            BasicFilter(ref query, search);
-
             if (search.Name != null)
                 query = query.Where(x => x.Name.ToLower().Contains(search.Name.ToLower()));
+
+            BasicFilter(ref query, search);
 
             return query.OrderBy(x => x.Name).Select(x => _mapper.Map<Language, LanguageResultDto>(x)).ToList();
         }

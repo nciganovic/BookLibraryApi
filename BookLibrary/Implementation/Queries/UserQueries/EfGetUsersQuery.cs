@@ -46,6 +46,8 @@ namespace Implementation.Queries.UserQueries
             if (search.MembershipId != 0)
                 query = query.Where(x => x.MembershipId == search.MembershipId);
 
+            BasicFilter(ref query, search);
+
             return query.OrderBy(x => x.Email).Select(x => _mapper.Map<User, UserResultDto>(x));
         }
     }

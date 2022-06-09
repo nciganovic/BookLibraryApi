@@ -40,8 +40,6 @@ namespace Implementation.Queries.ReservationQueries
                 .Include(x => x.User.Membership)
                 .AsQueryable();
 
-            BasicFilter(ref query, search);
-
             if (search.StartTime is not null)
                 query = query.Where(x => x.StartTime >= search.StartTime.ToDate());
 
@@ -53,6 +51,8 @@ namespace Implementation.Queries.ReservationQueries
 
             if (search.BookId is not null)
                 query = query.Where(x => x.Books.Any(y => y.Id == search.BookId));
+
+            BasicFilter(ref query, search);
 
             return query.OrderBy(x => x.StartTime).Select(x => _mapper.Map<Reservation, ReservationResultDto>(x));
         }

@@ -26,10 +26,10 @@ namespace Implementation.Queries.FormatQueries
         {
             var query = this.context.Formats.AsQueryable();
 
-            BasicFilter(ref query, search);
-
             if (search.Name != null)
                 query = query.Where(x => x.Name.ToLower().Contains(search.Name.ToLower()));
+
+            BasicFilter(ref query, search);
 
             return query.OrderBy(x => x.Name).Select(x => _mapper.Map<Format, FormatResultDto>(x)).ToList();
         }

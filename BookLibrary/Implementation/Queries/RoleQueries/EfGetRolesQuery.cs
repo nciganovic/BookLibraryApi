@@ -27,10 +27,10 @@ namespace Implementation.Queries.RoleQueries
         {
             var query = this.context.Roles.AsQueryable();
 
-            BasicFilter(ref query, search);
-
             if (search.Name != null)
                 query = query.Where(x => x.Name.ToLower().Contains(search.Name.ToLower()));
+
+            BasicFilter(ref query, search);
 
             return query.OrderBy(x => x.Name).Select(x => _mapper.Map<Role, RoleResultDto>(x)).ToList();
         }

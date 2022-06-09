@@ -38,8 +38,6 @@ namespace Implementation.Queries.BookQueries
                 .Include(i => i.Authors)
                 .AsQueryable();
 
-            BasicFilter(ref query, search);
-
             if (search.Title != null)
                 query = query.Where(x => x.Title.ToLower().Contains(search.Title.ToLower()));
 
@@ -78,6 +76,8 @@ namespace Implementation.Queries.BookQueries
 
             if (search.AuthorId != null)
                 query = query.Where(x => x.Authors.Any(x => x.Id == search.AuthorId));
+
+            BasicFilter(ref query, search);
 
             return query.OrderBy(x => x.Title).Select(x => _mapper.Map<Book, BookResultDto>(x)); 
         }
