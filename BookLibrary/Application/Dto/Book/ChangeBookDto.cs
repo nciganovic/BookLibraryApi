@@ -21,7 +21,6 @@ namespace Application.Dto.Book
         public int LanguageId { get; set; }
         public int CategoryId { get; set; }
         public int FormatId { get; set; }
-        public int[] AuthorIds { get; set; }
         public IFormFile CoverImage { get; set; }
         public IFormFile ContentFile { get; set; }
     }

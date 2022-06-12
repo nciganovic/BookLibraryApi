@@ -56,11 +56,6 @@ namespace Implementation.Validator
             RuleFor(x => x.CategoryId)
                .Must(x => CategoryExists(x))
                .WithMessage("Category with id = '{PropertyValue}' does not exist.'");
-
-            RuleForEach(x => x.AuthorIds).ChildRules(id =>
-            {
-                id.RuleFor(x => x).Must(x => AuthorExists(x)).WithMessage($"Author with id = '{id}' does not exist.'");
-            });
         }
 
         private bool PublisherExists(int id)
@@ -76,11 +71,6 @@ namespace Implementation.Validator
         private bool FormatExists(int id)
         {
             return _context.Formats.Find(id) != null;
-        }
-
-        private bool AuthorExists(int id)
-        {
-            return _context.Authors.Find(id) != null;
         }
 
         private bool CategoryExists(int id)

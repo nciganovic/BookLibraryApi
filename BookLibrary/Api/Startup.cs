@@ -158,8 +158,10 @@ namespace Api
             services.AddTransient<IRemoveBookCommand, EfRemoveBookCommand>();
             services.AddTransient<IGetOneBookQuery, EfGetOneBookQuery>();
             services.AddTransient<IGetBooksQuery, EfGetBooksQuery>();
+            services.AddTransient<IChangeBookAuthorsCommand, EfChangeBookAuthorsCommand>();
             services.AddTransient<AddBookValidator>();
             services.AddTransient<ChangeBookValidator>();
+            services.AddTransient<ChangeBookAuthorValidator>();
 
             services.AddTransient<IAddUserCommand, EfAddUserCommand>();
             services.AddTransient<IChangeUserCommand, EfChangeUserCommand>();

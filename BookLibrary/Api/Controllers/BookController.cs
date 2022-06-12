@@ -111,6 +111,23 @@ namespace Api.Controllers
             return UnprocessableEntity(UnprocessableEntityResponse.Message(result.Errors));
         }
 
+        [HttpPut("[action]/{id}")]
+        public IActionResult ChangeBookAuthors(int id, [FromBody] ChangeBookAuthorsDto dto
+            , [FromServices] IChangeBookAuthorsCommand command
+            , [FromServices] ChangeBookAuthorValidator validator)
+        {
+            dto.BookId = id;
+            var result = validator.Validate(dto);
+
+            if (result.IsValid)
+            {
+                _useCaseExecutor.ExecuteCommand(command, dto);
+                return Ok("Book authors change successfully");
+            }
+
+            return UnprocessableEntity(UnprocessableEntityResponse.Message(result.Errors));
+        }
+
         // DELETE api/<BookController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id, [FromServices] IRemoveBookCommand command)
